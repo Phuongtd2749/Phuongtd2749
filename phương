@@ -1,0 +1,90 @@
+import math
+
+def nhap_tu_file():
+    try:
+        ten_file = input("Nhập tên file: ")
+        with open(ten_file, "r") as file:
+            danh_sach = [int(x) for x in file.read().split()]
+        return danh_sach
+    except FileNotFoundError:
+        print("Không tìm thấy file.")
+        return []
+
+def nhap_tu_ban_phim():
+    try:
+        danh_sach = input("Nhập danh sách các số nguyên (cách nhau bằng khoảng trắng): ")
+        danh_sach = [int(x) for x in danh_sach.split()]
+        return danh_sach
+    except ValueError:
+        print("Dữ liệu không hợp lệ.")
+        return []
+
+def xuat_danh_sach(danh_sach):
+    if danh_sach:
+        print("Danh sách các số nguyên:")
+        for so in danh_sach:
+            print(so)
+    else:
+        print("Danh sách rỗng.")
+
+def tinh_trung_binh_cac_so_duong_chan(danh_sach):
+    so_duong_chan = [x for x in danh_sach if x > 0 and x % 2 == 0]
+    if so_duong_chan:
+        trung_binh = sum(so_duong_chan) / len(so_duong_chan)
+        print(f"Trung bình cộng các số dương chẵn: {trung_binh}")
+    else:
+        print("Không có số dương chẵn trong danh sách.")
+
+def la_so_chinh_phuong(x):
+    if x < 0:
+        return False
+    return math.sqrt(x).is_integer()
+
+def tinh_tong_cac_so_chinh_phuong(danh_sach):
+    so_chinh_phuong = [x for x in danh_sach if la_so_chinh_phuong(x)]
+    if so_chinh_phuong:
+        tong = sum(so_chinh_phuong)
+        print(f"Tổng các số chính phương: {tong}")
+    else:
+        print("Không có số chính phương trong danh sách.")
+
+def kiem_tra_tat_ca_so_chinh_phuong(danh_sach):
+    if all(la_so_chinh_phuong(x) for x in danh_sach):
+        print("Danh sách bao gồm tất cả các số chính phương.")
+    else:
+        print("Danh sách không bao gồm tất cả các số chính phương.")
+
+def main():
+    danh_sach = []
+    while True:
+        print("\nMenu:")
+        print("1. Nhập danh sách từ file")
+        print("2. Nhập danh sách từ bàn phím")
+        print("3. Xuất danh sách")
+        print("4. Tính trung bình cộng các số dương chẵn")
+        print("5. Tính tổng các số chính phương")
+        print("6. Kiểm tra tất cả số chính phương")
+        print("7. Thoát")
+        
+        lua_chon = input("Chọn một tùy chọn (1/2/3/4/5/6/7): ")
+        
+        if lua_chon == "1":
+            danh_sach = nhap_tu_file()
+        elif lua_chon == "2":
+            danh_sach = nhap_tu_ban_phim()
+        elif lua_chon == "3":
+            xuat_danh_sach(danh_sach)
+        elif lua_chon == "4":
+            tinh_trung_binh_cac_so_duong_chan(danh_sach)
+        elif lua_chon == "5":
+            tinh_tong_cac_so_chinh_phuong(danh_sach)
+        elif lua_chon == "6":
+            kiem_tra_tat_ca_so_chinh_phuong(danh_sach)
+        elif lua_chon == "7":
+            print("Thoát chương trình.")
+            break
+        else:
+            print("Tùy chọn không hợp lệ. Vui lòng chọn lại.")
+
+if __name__ == "__main__":
+    main()
